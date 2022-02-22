@@ -48,12 +48,23 @@ class UpcomingAdapter: RecyclerView.Adapter<UpcomingAdapter.RideViewHolder>() {
         val realTime = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG).format(currentItem.date)
         holder.apply {
             date.text = holder.date.text.toString()+ realTime.toString()
-            distance.text = holder.distance.text.toString() + "0"
+            distance.text = holder.distance.text.toString() + getMinDistance(currentItem.station_path,currentItem.originStationCode)
             city.text = currentItem.city
             state.text = currentItem.state
         }
     }
-
     override fun getItemCount(): Int = rideList.size
+    fun getMinDistance(stationPath:List<Int>,originStation: Int): Int{
+        var minDis = 0
+        var nearest: Int = 0
+        for(i in stationPath){
+            if(i>=originStation){
+                nearest = i
+                break
+            }
+        }
+        minDis = nearest - originStation
+        return minDis
+    }
 
 }

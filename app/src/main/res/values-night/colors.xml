@@ -11,4 +11,5 @@
     <color name="main_background">#262626</color>
     <color name="city_state">#262626</color>
     <color name="ride_card">#141414</color>
+    <color name="tab_text_unselected">#D0CBCB</color>
 </resources>

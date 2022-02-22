@@ -17,16 +17,16 @@ import com.cowday.edvora.data.Ride
 import com.cowday.edvora.databinding.FragmentUpcomingBinding
 import com.cowday.edvora.viewModels.UpcomingViewModel
 
-class UpcomingFragment : Fragment() {
+class UpcomingFragment(private val rides: ArrayList<Ride>) : Fragment() {
     private lateinit var binding: FragmentUpcomingBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: UpcomingViewModel
     private val adapter = UpcomingAdapter()
-    val rideList: ArrayList<Ride> = arrayListOf(
-        Ride(1,23, listOf(23, 42, 45, 48, 56, 60, 77, 81, 93),93,1644924365,"url","Maharashtra","Panvel"),
-        Ride(2,20, listOf(20, 39, 40, 42, 54, 63, 72, 88, 98),98,1644924365,"url","Maharashtra","Panvel"),
-        Ride(3,13, listOf(13, 25, 41, 48, 59, 64, 75, 81, 91),91,1644673041,"url","Maharashtra","Panvel"),
-    )
+//    val rideList: ArrayList<Ride> = arrayListOf(
+//        Ride(1,23, listOf(23, 42, 45, 48, 56, 60, 77, 81, 93),93,1644924365,"url","Maharashtra","Panvel"),
+//        Ride(2,20, listOf(20, 39, 40, 42, 54, 63, 72, 88, 98),98,1644924365,"url","Maharashtra","Panvel"),
+//        Ride(3,13, listOf(13, 25, 41, 48, 59, 64, 75, 81, 91),91,1644673041,"url","Maharashtra","Panvel"),
+//    )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,12 +41,11 @@ class UpcomingFragment : Fragment() {
         recyclerView = binding.recycler
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val currentTime = System.currentTimeMillis()
         viewModel._rideList.observe(viewLifecycleOwner, Observer {
             adapter.updateRideList(it)
         })
         val currentRides = arrayListOf<Ride>()
-        for(i in rideList){
+        for(i in rides){
 //            if(i.date < currentTime){
                 currentRides.add(i)
 //            }
@@ -57,8 +56,6 @@ class UpcomingFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(): Fragment {
-            return UpcomingFragment()
-        }
+        fun newInstance(rides: ArrayList<Ride>) =  UpcomingFragment(rides)
     }
 }

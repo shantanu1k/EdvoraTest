@@ -7,11 +7,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cowday.edvora.R
 import com.cowday.edvora.data.Ride
-import java.text.SimpleDateFormat
 
-class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
-    var rideList : ArrayList<Ride> = arrayListOf()
-    class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)  {
+class NearestAdapter: RecyclerView.Adapter<NearestAdapter.RideViewHolder>() {
+//    val station_path = listOf(20, 93, 39, 40, 42, 54, 63, 72, 88, 98)
+    var minDistance = 0
+    var rideList : ArrayList<Ride> = arrayListOf(
+//        Ride(1,23, listOf(33, 42, 45, 48, 56, 60, 77, 81, 93),93,1644924365,"url","Maharashtra","Panvel"),
+//        Ride(2,20, listOf(20, 39, 40, 42, 54, 63, 72, 88, 98),98,1644924365,"url","Maharashtra","Panvel"),
+//        Ride(3,13, listOf(16, 25, 41, 48, 59, 64, 75, 81, 91),91,1644924365,"url","Maharashtra","Panvel")
+    )
+    class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id: TextView = itemView.findViewById(R.id.ride_id)
         val originStation: TextView = itemView.findViewById(R.id.origin_station)
         val stationPath: TextView = itemView.findViewById(R.id.station_path)
@@ -23,29 +28,20 @@ class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
     fun updateRideList(rides: ArrayList<Ride>){
         rideList = rides
     }
-    fun getRides():Int{
-        return rideList.size
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RideViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_ride,parent,false)
         return RideViewHolder(itemView)
     }
-    override fun onBindViewHolder(holder: PastAdapter.RideViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RideViewHolder, position: Int) {
         val currentItem = rideList[position]
-        holder.apply {
-            id.text = holder.id.text.toString() + currentItem.id.toString()
-            originStation.text = holder.originStation.text.toString() + currentItem.originStationCode.toString()
-            stationPath.text = holder.stationPath.text.toString()+currentItem.station_path.toString()
-        }
-        val realTime = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG).format(currentItem.date)
-        holder.apply {
-            date.text = holder.date.text.toString()+ realTime.toString()
-            distance.text = holder.distance.text.toString() + getMinDistance(currentItem.station_path,currentItem.originStationCode)
-            city.text = currentItem.city
-            state.text = currentItem.state
-        }
+        holder.id.text = holder.id.text.toString() + currentItem.id.toString()
+        holder.originStation.text = holder.originStation.text.toString() + currentItem.originStationCode.toString()
+        holder.stationPath.text = holder.stationPath.text.toString()+currentItem.station_path.toString()
+        holder.date.text = holder.date.text.toString()+ currentItem.date
+        holder.distance.text = holder.distance.text.toString()+getMinDistance(currentItem.station_path,currentItem.originStationCode)
+        holder.city.text = currentItem.city
+        holder.state.text = currentItem.state
     }
-    override fun getItemCount(): Int = rideList.size
     fun getMinDistance(stationPath:List<Int>,originStation: Int): Int{
         var minDis = 0
         var nearest: Int = 0
@@ -58,5 +54,5 @@ class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
         minDis = nearest - originStation
         return minDis
     }
-
+    override fun getItemCount(): Int = rideList.size
 }

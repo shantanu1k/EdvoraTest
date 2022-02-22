@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cowday.edvora.data.Ride
 
-class NearestViewModel: ViewModel() {
+class PastViewModel: ViewModel() {
     private val rideList: MutableLiveData<ArrayList<Ride>> = MutableLiveData()
     val _rideList: LiveData<ArrayList<Ride>>
         get() =  rideList

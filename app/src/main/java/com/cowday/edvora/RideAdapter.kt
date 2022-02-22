@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cowday.edvora.data.Ride
 
 class RideAdapter: RecyclerView.Adapter<RideAdapter.RideViewHolder>() {
-    val station_path = listOf(20,93, 39, 40, 42, 54, 63, 72, 88, 98)
+    val station_path = listOf(20, 93, 39, 40, 42, 54, 63, 72, 88, 98)
     var rideList : ArrayList<Ride> = arrayListOf()
     class RideViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)  {
         val id: TextView = itemView.findViewById(R.id.ride_id)

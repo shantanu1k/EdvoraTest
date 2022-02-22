@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp"
     android:background="@color/main_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.PastFragment">
@@ -15,18 +16,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
-    <TextView
-        android:id="@+id/no_past_rides"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="36sp"
-        android:textColor="@color/white"
-        android:text="No past rides"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
