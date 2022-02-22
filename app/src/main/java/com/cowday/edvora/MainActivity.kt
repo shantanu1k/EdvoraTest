@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         //Setting the username, profile image in appbar
         binding.username.text = user.name
-        binding.userImg.setImageResource(R.drawable.sample_pic)
+        binding.userImg.setImageResource(R.drawable.profile_avatar_placeholder)
     }
 
 }
