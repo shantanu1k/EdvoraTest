@@ -1,5 +1,6 @@
 package com.cowday.edvora.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cowday.edvora.R
 import com.cowday.edvora.data.Ride
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
     var rideList : ArrayList<Ride> = arrayListOf()
+
     class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)  {
         val id: TextView = itemView.findViewById(R.id.ride_id)
         val originStation: TextView = itemView.findViewById(R.id.origin_station)
@@ -20,11 +24,9 @@ class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
         val city: TextView = itemView.findViewById(R.id.city_name)
         val state: TextView = itemView.findViewById(R.id.state_name)
     }
+    //Updating the rides
     fun updateRideList(rides: ArrayList<Ride>){
         rideList = rides
-    }
-    fun getRides():Int{
-        return rideList.size
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RideViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_ride,parent,false)
@@ -39,13 +41,15 @@ class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
         }
         val realTime = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG).format(currentItem.date)
         holder.apply {
-            date.text = holder.date.text.toString()+ realTime.toString()
+            date.text = holder.date.text.toString()+ getDateTime(currentItem.date)
             distance.text = holder.distance.text.toString() + getMinDistance(currentItem.station_path,currentItem.originStationCode)
             city.text = currentItem.city
             state.text = currentItem.state
         }
     }
     override fun getItemCount(): Int = rideList.size
+    // A function to get the distance between the origin station & the
+    // nearest station from station_path array
     fun getMinDistance(stationPath:List<Int>,originStation: Int): Int{
         var minDis = 0
         var nearest: Int = 0
@@ -57,6 +61,14 @@ class PastAdapter: RecyclerView.Adapter<PastAdapter.RideViewHolder>() {
         }
         minDis = nearest - originStation
         return minDis
+    }
+    //Converting the unix epoch time to date-time format
+    @SuppressLint("SimpleDateFormat")
+    fun getDateTime(unixEpoch: Long): String{
+        var dateTime = ""
+        val date = Date(unixEpoch*1000)
+        dateTime = SimpleDateFormat("d MMM yyyy HH:mm").format(date)
+        return dateTime
     }
 
 }

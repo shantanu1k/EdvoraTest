@@ -33,7 +33,6 @@ class NearestFragment : Fragment() {
         binding = FragmentNearestBinding.inflate(layoutInflater)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(NearestViewModel::class.java)

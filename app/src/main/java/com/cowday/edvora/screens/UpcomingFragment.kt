@@ -1,21 +1,20 @@
 package com.cowday.edvora.screens
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cowday.edvora.R
-import com.cowday.edvora.RideAdapter
 import com.cowday.edvora.adapters.UpcomingAdapter
 import com.cowday.edvora.data.Ride
 import com.cowday.edvora.databinding.FragmentUpcomingBinding
 import com.cowday.edvora.viewModels.UpcomingViewModel
+import com.google.android.material.tabs.TabLayout
+
 
 class UpcomingFragment : Fragment() {
     private lateinit var binding: FragmentUpcomingBinding

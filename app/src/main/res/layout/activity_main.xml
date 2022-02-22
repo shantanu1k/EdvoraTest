@@ -64,8 +64,8 @@
                     <ImageView
                         android:id="@+id/user_img"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/profile_avatar_placeholder" />
+                        android:scaleType="centerCrop"
+                        android:layout_height="match_parent" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

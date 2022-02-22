@@ -1,6 +1,7 @@
 package com.cowday.edvora.adapters
 
 import android.annotation.SuppressLint
+import android.icu.text.DateFormat.getTimeInstance
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cowday.edvora.R
 import com.cowday.edvora.data.Ride
+import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UpcomingAdapter: RecyclerView.Adapter<UpcomingAdapter.RideViewHolder>() {
-    var rideList : ArrayList<Ride> = arrayListOf(
-//        Ride(1,23, listOf(23, 42, 45, 48, 56, 60, 77, 81, 93),93,1644924365,"url","Maharashtra","Panvel"),
-//        Ride(2,20, listOf(20, 39, 40, 42, 54, 63, 72, 88, 98),98,1744924365,"url","Maharashtra","Panvel"),
-//        Ride(3,13, listOf(13, 25, 41, 48, 59, 64, 75, 81, 91),91,1644924365,"url","Maharashtra","Panvel"),
-    )
-    init{
-        updateRideList(rideList)
-    }
+    var rideList : ArrayList<Ride> = arrayListOf()
     class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)  {
         val id: TextView = itemView.findViewById(R.id.ride_id)
         val originStation: TextView = itemView.findViewById(R.id.origin_station)
@@ -28,11 +25,11 @@ class UpcomingAdapter: RecyclerView.Adapter<UpcomingAdapter.RideViewHolder>() {
         val city: TextView = itemView.findViewById(R.id.city_name)
         val state: TextView = itemView.findViewById(R.id.state_name)
     }
+    //Updating the rides
     fun updateRideList(upcomingRideList: ArrayList<Ride>){
         rideList = upcomingRideList
         notifyDataSetChanged()
     }
-    fun getRides() = rideList.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RideViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_ride,parent,false)
         return RideViewHolder(itemView)
@@ -45,15 +42,16 @@ class UpcomingAdapter: RecyclerView.Adapter<UpcomingAdapter.RideViewHolder>() {
             originStation.text = holder.originStation.text.toString() + currentItem.originStationCode.toString()
             stationPath.text = holder.stationPath.text.toString()+currentItem.station_path.toString()
         }
-        val realTime = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG).format(currentItem.date)
         holder.apply {
-            date.text = holder.date.text.toString()+ realTime.toString()
+            date.text = holder.date.text.toString()+ getDateTime(currentItem.date)
             distance.text = holder.distance.text.toString() + getMinDistance(currentItem.station_path,currentItem.originStationCode)
             city.text = currentItem.city
             state.text = currentItem.state
         }
     }
     override fun getItemCount(): Int = rideList.size
+    // A function to get the distance between the origin station & the
+    // nearest station from station_path array
     fun getMinDistance(stationPath:List<Int>,originStation: Int): Int{
         var minDis = 0
         var nearest: Int = 0
@@ -66,5 +64,12 @@ class UpcomingAdapter: RecyclerView.Adapter<UpcomingAdapter.RideViewHolder>() {
         minDis = nearest - originStation
         return minDis
     }
-
+    //Converting the unix epoch time to date-time format
+    @SuppressLint("SimpleDateFormat")
+    fun getDateTime(unixEpoch: Long): String{
+        var dateTime = ""
+        val date = Date(unixEpoch*1000)
+        dateTime = SimpleDateFormat("d MMM yyyy HH:mm").format(date)
+        return dateTime
+    }
 }
